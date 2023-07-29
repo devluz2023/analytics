@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'acrappfaluz3.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   tag: '$(Build.BuildId)'
+  imageNameWithTag: ''
 
 
 pool:
@@ -55,6 +56,8 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
+        
+
 
 # - task: Docker@2
 #   inputs:
