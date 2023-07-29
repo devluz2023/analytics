@@ -15,7 +15,7 @@ variables:
 
 
 pool:
-  name: 'Default'
+  name: 'mypersoapool'
 
 stages:
 - stage: Setup
