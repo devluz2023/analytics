@@ -15,7 +15,7 @@ variables:
 
 
 pool:
-  name: 'VMSS - LAB'
+  name: 'Default'
 
 stages:
 - stage: Setup
