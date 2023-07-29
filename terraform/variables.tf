@@ -6,12 +6,12 @@ variable "agent_count" {
 # Set the values for these variable in terraform.tfvars
 variable "aks_service_principal_app_id" {
   type = string
-  default = "5f7aa260-ae5c-4a7b-825a-887728c493d9"
+  default = var.APP_ID
 }
 
 variable "aks_service_principal_client_secret" {
   type = string
-  default = "-5F8Q~AJgwnIS6xwW6JTttDVmj-3j74dil_riax1"
+  default = var.PASSWORD
 }
 
 variable "cluster_name" {
@@ -51,6 +51,6 @@ variable "resource_group_name_prefix" {
 }
 
 variable "ssh_public_key" {
-  default = "~/.ssh/id_rsa_default.pub"
+  default = "~/.ssh/id_rsa.pub"
 }
 

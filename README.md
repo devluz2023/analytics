@@ -1,3 +1,8 @@
+# Config ssh
+1. generate key 
+`ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+
+move the key to folder ssh -> mv terraform-aws ~/.ssh/
 # To run Terraform
 1. Log in to azure account
 `az login`
