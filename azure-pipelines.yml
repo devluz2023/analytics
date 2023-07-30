@@ -18,26 +18,7 @@ pool:
   name: 'mypersoapool'
 
 stages:
-- stage: Setup
-  displayName: 'Setup'
-  jobs:
-  - job: SetupJob
-    displayName: 'Setup Job'
-    steps:
-    - script: |
-        curl -sSL https://get.docker.com/ | sh
-        docker -v
-        sudo systemctl start docker
-        sudo groupadd docker
-        sudo usermod -aG docker $USER
-        sudo chmod 666 /var/run/docker.sock
-        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-        kubectl version --client
-        sudo apt-get -y install zip
-        # curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-      displayName: 'Install kubectl and zip'
- 
+
 - stage: Build
   displayName: Build and push stage
   jobs:
