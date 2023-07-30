@@ -9,7 +9,8 @@ variables:
   dockerRegistryServiceConnection: 'acrapp'
   imageRepository: 'acrappfaluz3'
   containerRegistry: 'acrappfaluz3.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  # dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/app'
   tag: '$(Build.BuildId)'
   imageNameWithTag: ''
 
