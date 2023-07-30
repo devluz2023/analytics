@@ -15,7 +15,7 @@ variables:
 
 
 pool:
-  name: 'azuremachine'
+  name: 'aks'
 
 stages:
 
