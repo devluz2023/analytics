@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-kubernetes
+  name: app-backend-python
   namespace: app-backend
 spec:
   selector:
     matchLabels:
-      name: hello-kubernetes
+      name: app-backend-python
   template:
     metadata:
       labels:
-        name: hello-kubernetes
+        name: app-backend-python
     spec:
       containers:
         - name: app
-          image: paulbouwer/hello-kubernetes:1.8
+          image: paulbouwer/app-backend-python:1.8
           ports:
-            - containerPort: 8080
+            - containerPort: 5000
