@@ -45,13 +45,7 @@ stages:
   - job: DeployKubernetes
     displayName: Deploy to Kubernetes
     steps:
-    - script: |
-        # Get the latest image tag from Azure Container Registry using Azure CLI and jq
-        $latest_image_tag = az acr repository show-tags --name $(dockerRegistryServiceConnection) --repository $(imageRepository) --orderby time_desc --top 1 | jq -r '.[0]'
-
-        # Replace the image tag in the Kubernetes manifest file
-        sed -i 's#$(containerRegistry)/$(imageRepository):.*#$(containerRegistry)/$(imageRepository):'$latest_image_tag'#' kubernetes/backend-deployment.yaml
-      displayName: 'Set Image Tag in Kubernetes Manifest'
+   
     - task: KubernetesManifest@1
       inputs:
         action: 'deploy'
