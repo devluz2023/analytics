@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: acrappfaluz3.azurecr.io/devluzanalytics:45
+          image: acrappfaluz3.azurecr.io/devluzanalytics:58
           ports:
             - containerPort: 5000

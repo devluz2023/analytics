@@ -35,4 +35,4 @@ move the key to folder ssh -> mv terraform-aws ~/.ssh/
 
 
 
-
+find . ntime + 30
