@@ -38,6 +38,7 @@
 
 
 # ansible
+ansible-playbook -i inventory.ini playbook.yml
 
 # terraform
 terraform apply -auto-approve
