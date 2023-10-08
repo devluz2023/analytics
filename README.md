@@ -40,9 +40,12 @@
 # ansible
 
 # terraform
-
+terraform apply -auto-approve
 # shell script
 
 
 
 
+# to do
+1. gerar chave automaticamente
+2. copiar os arquivos automaticamente

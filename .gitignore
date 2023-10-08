@@ -74,3 +74,4 @@ override.tf.json
 
 
 .env
+azure-key.cer

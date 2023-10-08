@@ -50,25 +50,26 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm1" {
 }
 
 
-resource "azurerm_virtual_machine_extension" "vm1extension" {
-  name                 = var.vm_name
-  virtual_machine_id   = azurerm_linux_virtual_machine.ubuntu-machine.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
+# resource "azurerm_virtual_machine_extension" "vm1extension" {
+#   name                 = "hostname"
+#   virtual_machine_id   = azurerm_linux_virtual_machine.ubuntu-machine.id
+#   publisher            = "Microsoft.Azure.Extensions"
+#   type                 = "CustomScript"
+#   type_handler_version = "2.0"
 
-  settings = <<SETTINGS
-    {
-        "fileUris":["https://raw.githubusercontent.com/devluz2023/analytics/main/scripts/ubuntu-setup-ansible.sh"]
-    }
-SETTINGS
 
-  protected_settings = <<PROTECTED_SETTINGS
-    {
-        "commandToExecute": ". ./ubuntu-setup-ansible.sh"
-    }
-PROTECTED_SETTINGS
-}
+#   settings = <<SETTINGS
+#     {
+#         "fileUris":["https://raw.githubusercontent.com/devluz2023/analytics/main/scripts/ubuntu-setup-ansible.sh"]
+#     }
+# SETTINGS
+
+#   protected_settings = <<PROTECTED_SETTINGS
+#     {
+#         "commandToExecute": ". ./ubuntu-setup-ansible.sh"
+#     }
+# PROTECTED_SETTINGS
+# }
 
 # resource "null_resource" "install_ansible" {
 #   triggers = {
