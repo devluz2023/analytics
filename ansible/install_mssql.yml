@@ -23,9 +23,12 @@
         name: mssql-server
         state: present
 
+
     - name: Run mssql-conf setup
-      command: /opt/mssql/bin/mssql-conf setup accept-eula=yes password=YourPassword  # Replace YourPassword
+      command: /opt/mssql/bin/mssql-conf set-sa-password -p plataforma  # Replace YourPassword with your desired SQL Server SA password
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+
 
     - name: Start and enable SQL Server service
       systemd:
@@ -57,3 +60,6 @@
     - name: Reload firewall
       command: ufw reload
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+
+

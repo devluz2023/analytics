@@ -59,3 +59,6 @@ terraform apply -auto-approve
 # to do
 1. gerar chave automaticamente
 2. copiar os arquivos automaticamente
+3. instalar ansible remotamente
+4. subir infra via azure pileine
+5. destrutira infra via azure piline
