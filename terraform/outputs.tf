@@ -14,7 +14,7 @@ output "admin_username" {
 }
 
 output "tls_private_key" {
-  value     = tls_private_key.vm1key
+  value     = tls_private_key.vm1key.private_key_pem
   sensitive = true
 }
 

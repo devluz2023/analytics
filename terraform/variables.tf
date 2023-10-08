@@ -46,6 +46,19 @@ variable "nsgRule1" {
 }
 
 
+variable "vmShutdownTime" {
+  type        = string
+  description = "virtual machine daily shutdown time"
+  default     = "1900"
+}
+
+variable "vmShutdownTimeZone" {
+  type        = string
+  description = "virtual machine daily shutdown time zone"
+  default     = "AUS Eastern Standard Time"
+}
+
+
 # variable "agent_count" {
 #   default = 3
 # }

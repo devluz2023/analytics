@@ -36,6 +36,20 @@ resource "azurerm_linux_virtual_machine" "ubuntu-machine" {
 }
 
 
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm1" {
+  virtual_machine_id = azurerm_linux_virtual_machine.ubuntu-machine.id
+  location           = azurerm_resource_group.rg.location
+  enabled            = true
+
+  daily_recurrence_time = var.vmShutdownTime
+  timezone              = var.vmShutdownTimeZone
+
+  notification_settings {
+    enabled = false
+  }
+}
+
+
 resource "azurerm_virtual_machine_extension" "vm1extension" {
   name                 = var.vm_name
   virtual_machine_id   = azurerm_linux_virtual_machine.ubuntu-machine.id
@@ -45,7 +59,7 @@ resource "azurerm_virtual_machine_extension" "vm1extension" {
 
   settings = <<SETTINGS
     {
-        "fileUris":["https://raw.githubusercontent.com/globalbao/terraform-azurerm-ansible-linux-vm/master/scripts/ubuntu-setup-ansible.sh"]
+        "fileUris":["https://raw.githubusercontent.com/devluz2023/analytics/main/scripts/ubuntu-setup-ansible.sh"]
     }
 SETTINGS
 
