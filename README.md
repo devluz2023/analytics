@@ -40,6 +40,15 @@
 # ansible
 ansible-playbook -i inventory.ini playbook.yml
 
+ansible-playbook -i inventory.ini -k ./azure-key.cer ansible/install_mssql.yml
+
+ansible-playbook -i inventory.ini -k azure-key.cer /ansible/mssql.yml
+
+
+`ssh -i azure-key.cer  adminuser@20.127.114.37`
+
+
+
 # terraform
 terraform apply -auto-approve
 # shell script

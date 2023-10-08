@@ -1,6 +1,6 @@
 ---
-- name: Install MSSQL Server on Ubuntu
-  hosts: your_ubuntu_server  # Replace with the hostname or IP of your Ubuntu machine
+- name: Install MSSQL Server on Ubuntu (Local)
+  hosts: localhost
   become: yes  # Run tasks with elevated privileges (sudo)
 
   tasks:
