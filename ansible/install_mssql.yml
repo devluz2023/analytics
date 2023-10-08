@@ -1,0 +1,59 @@
+---
+- name: Install MSSQL Server on Ubuntu
+  hosts: your_ubuntu_server  # Replace with the hostname or IP of your Ubuntu machine
+  become: yes  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Add Microsoft SQL Server repository
+      apt_repository:
+        repo: 'deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/mssql-server-2019/ bionic main'
+        state: present
+        update_cache: yes
+
+    - name: Accept the SQL Server license terms
+      debconf:
+        name: mssql-server-2019
+        question: 'mssql-server-2019/accept-eula'
+        vtype: select
+        value: 'true'
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+    - name: Install MSSQL Server package
+      apt:
+        name: mssql-server
+        state: present
+
+    - name: Run mssql-conf setup
+      command: /opt/mssql/bin/mssql-conf setup accept-eula=yes password=YourPassword  # Replace YourPassword
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+    - name: Start and enable SQL Server service
+      systemd:
+        name: mssql-server
+        enabled: yes
+        state: started
+
+    - name: Install mssql-tools (optional)
+      apt:
+        name: mssql-tools
+        state: present
+
+    - name: Install Python packages for Ansible SQL modules (optional)
+      apt:
+        name: python3-pymssql python3-sqlalchemy
+        state: present
+
+    - name: Restart SQL Server service
+      systemd:
+        name: mssql-server
+        state: restarted
+
+    - name: Allow SQL Server through the firewall
+      ufw:
+        rule: allow
+        name: 'MSSQL'
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+    - name: Reload firewall
+      command: ufw reload
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'

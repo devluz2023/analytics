@@ -1,32 +1,83 @@
-# Create an Azure Virtual Machine with Standard HDD storage
-resource "azurerm_virtual_machine" "ubuntu-machine" {
+resource "tls_private_key" "vm1key" {
+  algorithm = "RSA"
+  rsa_bits  = "4096"
+}
+
+resource "azurerm_linux_virtual_machine" "ubuntu-machine" {
   name                  = var.vm_name
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.analytics.id]
-  vm_size               = var.vm_size
+  size                  = "Standard_DS2_v2"  
+  admin_username        = var.admin_username
 
-  storage_os_disk {
-    name              = "${var.vm_name}-osdisk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"  # Use Standard HDD storage
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = tls_private_key.vm1key.public_key_openssh
   }
 
-  storage_image_reference {
+  
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
     version   = "latest"
   }
 
-  os_profile {
-    computer_name  = var.vm_name
-    admin_username = "adminuser"
-    admin_password = "Password1234!" # Change this to a strong password
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
+ admin_ssh_key {
+    username   = var.admin_username
+    public_key = tls_private_key.vm1key.public_key_openssh
+  }                                                                                                                                                                                                                                                                         
 }
+
+
+resource "azurerm_virtual_machine_extension" "vm1extension" {
+  name                 = var.vm_name
+  virtual_machine_id   = azurerm_linux_virtual_machine.ubuntu-machine.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.1"
+
+  settings = <<SETTINGS
+    {
+        "fileUris":["https://raw.githubusercontent.com/globalbao/terraform-azurerm-ansible-linux-vm/master/scripts/ubuntu-setup-ansible.sh"]
+    }
+SETTINGS
+
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+        "commandToExecute": ". ./ubuntu-setup-ansible.sh"
+    }
+PROTECTED_SETTINGS
+}
+
+# resource "null_resource" "install_ansible" {
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
+
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo apt-get update",
+#       "sudo apt-get install -y ansible",
+#       "ansible-playbook -i localhost, -c local ../ansible/install_mssql.yml"
+#       # Add any other installation steps as needed
+#     ]
+
+#     connection {
+#       type        = "ssh"
+#       user        = var.admin_username
+#       host        = azurerm_public_ip.analytics-public-ip.ip_address
+#       private_key = file("~/.ssh/azure-key")
+#     }
+
+
+#   }
+
+#   depends_on = [azurerm_linux_virtual_machine.ubuntu-machine]
+# }

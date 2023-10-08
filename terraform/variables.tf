@@ -20,6 +20,31 @@ variable "vm_size" {
 }
 
 
+variable "admin_username" {
+  description = "The admin username for the virtual machine"
+  type        = string
+  default     = "adminuser"  # You can set a default value here if needed
+}
+
+
+
+variable "nsgRule1" {
+  type        = map
+  description = "network security group rule 1 - remember to modify 'source_address_prefix' with your own local Public IP address https://www.whatismyip.com/"
+  default = {
+    "name"                       = "SSH_allow"
+    "description"                = "Allow inbound SSH from single Public IP to Ansible Host"
+    "priority"                   = 100
+    "direction"                  = "Inbound"
+    "access"                     = "Allow"
+    "protocol"                   = "Tcp"
+    "source_port_range"          = "*"
+    "destination_port_range"     = "22"
+    "source_address_prefix"      = "0.0.0.0"
+    "destination_address_prefix" = "10.0.0.5"
+  }
+}
+
 
 # variable "agent_count" {
 #   default = 3

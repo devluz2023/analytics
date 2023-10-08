@@ -1,8 +1,10 @@
 # Config ssh
-1. generate key 
-`ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+1. generate key on local machine
+`ssh-keygen -t rsa -b 4096  -f ~/.ssh/azure-key -C "fabio.jdluz@gmail.com"`
 
-move the key to folder ssh -> mv terraform-aws ~/.ssh/
+# move the key to folder ssh 
+1. ` mv terraform-aws ~/.ssh/`
+
 # To run Terraform
 1. Log in to azure account
 `az login`
@@ -35,4 +37,12 @@ move the key to folder ssh -> mv terraform-aws ~/.ssh/
 
 
 
-find . ntime + 30
+# ansible
+
+# terraform
+
+# shell script
+
+
+
+

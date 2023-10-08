@@ -1,0 +1,19 @@
+---
+- name: Add SSH key to authorized_keys
+  hosts: all
+  tasks:
+    - name: Ensure SSH directory exists
+      become: yes
+      become_user: "{{ ansible_user }}"
+      file:
+        path: "~/.ssh"
+        state: directory
+        mode: '0700'
+
+    - name: Add SSH public key to authorized_keys
+      become: yes
+      become_user: "{{ ansible_user }}"
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ lookup('file', '~/.ssh/azure-key.pub') }}"
+        state: present

@@ -2,6 +2,28 @@ output "resource_group_name" {
   value = azurerm_resource_group.rg.name
 }
 
+output "public_ip_address" {
+  description = "Public IP address of the Azure Virtual Machine"
+  value       = azurerm_public_ip.analytics-public-ip.ip_address
+}
+
+
+output "admin_username" {
+  description = "Admin username used for the virtual machine"
+  value       = var.admin_username
+}
+
+output "tls_private_key" {
+  value     = tls_private_key.vm1key
+  sensitive = true
+}
+
+
+
+# output "azurerm_virtual_network_name" {
+#   value = var.linux_vm.azurerm_virtual_network_name
+# }
+
 
 # output "client_certificate" {
 #   value     = azurerm_kubernetes_cluster.k8s.kube_config[0].client_certificate
