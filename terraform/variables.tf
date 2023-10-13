@@ -26,6 +26,9 @@ variable "admin_username" {
   default     = "adminuser"  # You can set a default value here if needed
 }
 
+variable "log_analytics_workspace_sku" {
+  default = "PerGB2018"
+}
 
 
 variable "nsgRule1" {
@@ -58,10 +61,17 @@ variable "vmShutdownTimeZone" {
   default     = "AUS Eastern Standard Time"
 }
 
+variable "acr_name" {
+  default = "acrappfaluz"
+}
 
-# variable "agent_count" {
-#   default = 3
-# }
+variable "log_analytics_workspace_name" {
+  default = "testLogAnalyticsWorkspaceName"
+}
+
+ variable "agent_count" {
+   default = 3
+ }
 
 # # The following two variable declarations are placeholder references.
 # # Set the values for these variable in terraform.tfvars
@@ -79,9 +89,7 @@ variable "vmShutdownTimeZone" {
 #   default = "k8stest"
 # }
 
-# variable "acr_name" {
-#   default = "acrappfaluz"
-# }
+
 
 # variable "dns_prefix" {
 #   default = "k8stest"

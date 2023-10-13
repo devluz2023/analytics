@@ -1,8 +1,11 @@
-# Python Flask
+# Python Flask & Terraform
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyo
+*.egg-info/
+*.rej
 
 # C extensions
 *.so
@@ -14,11 +17,28 @@ eggs/
 *.egg-info/
 .env
 
+# Logs
+*.log
+
+# Runtime data
+*.pid
+*.seed
+
 # Virtual environment
 venv/
+*.venv
+*.virtualenv
+*.virtualenvs/
+*.virtualenv/
+*.env/
+*.env.bak/
+env.bak/
 
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# Terraform
+# Pipenv
+Pipfile.lock
 
 # .terraform folder
 .terraform/
@@ -43,35 +63,16 @@ override.tf.json
 # .terraformrc
 .terraformrc
 
-# .tfstate files
-*.tfstate
-*.tfstate.*
-
-# .tfvars files
-*.tfvars
-
 # .tfplan files
 *.tfplan
 
-
 # React
-
-# dependencies
-/node_modules
-
-# production build
-/build
-
-# local development
-/.env.local
-/.env.development.local
-/.env.test.local
+...
 
 # IDE files
 *.idea
 *.vscode
 *.DS_Store
-
 
 .env
 azure-key.cer

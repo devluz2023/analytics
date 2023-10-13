@@ -1,0 +1,18 @@
+FROM python:3
+
+WORKDIR /app
+
+COPY requirements.txt ./
+
+# install FreeTDS and dependencies
+RUN apt-get update && apt-get install -y gnupg2 curl && \
+    curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft-archive-keyring.gpg && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+COPY . .
+
+EXPOSE 5001
+
+CMD ["python", "app.py"]

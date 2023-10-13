@@ -1,0 +1,4 @@
+location /grafana/ {
+    proxy_pass http://grafana/;
+    # other proxy settings ...
+}

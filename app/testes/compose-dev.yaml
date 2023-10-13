@@ -1,0 +1,14 @@
+services:
+
+
+
+
+  dev-python:
+    container_name: dev_python2
+    hostname: db_python2
+    build:
+      dockerfile: Dockerfile.dev
+    # secrets:
+    #   - db-password
+    # depends_on:
+    #   - db
