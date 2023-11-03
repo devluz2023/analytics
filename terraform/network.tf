@@ -75,6 +75,100 @@ resource "azurerm_network_security_rule" "sql" {
   network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
 }
 
+
+resource "azurerm_network_security_rule" "redis" {
+  name                        = "allow-redis"
+  priority                    = 1016
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "6379" # Default port for Redis
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+resource "azurerm_network_security_rule" "mongodb" {
+  name                        = "allow-mongodb"
+  priority                    = 1014
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "27017" # Default port for MongoDB
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+resource "azurerm_network_security_rule" "oracle-database" {
+  name                        = "allow-oracle"
+  priority                    = 1005
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "1521" # Default port for Oracle Database
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+# Grafana typically runs on port 3000
+resource "azurerm_network_security_rule" "grafana" {
+  name                        = "allow-grafana"
+  priority                    = 1006
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3000" # Default port for Grafana
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+# Kibana typically runs on port 5601
+resource "azurerm_network_security_rule" "kibana" {
+  name                        = "allow-kibana"
+  priority                    = 1007
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "5601" # Default port for Kibana
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+resource "azurerm_network_security_rule" "mysql" {
+  name                        = "allow-mysql"
+  priority                    = 1008
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3306" # Default port for MySQL
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+
 # Rule to allow incoming traffic on port 8080
 resource "azurerm_network_security_rule" "http" {
   name                        = "allow-http"
@@ -88,6 +182,7 @@ resource "azurerm_network_security_rule" "http" {
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
 }
 
 
@@ -107,6 +202,89 @@ resource "azurerm_network_security_rule" "https" {
 }
 
 
+resource "azurerm_network_security_rule" "db2" {
+  name                        = "allow-db2"
+  priority                    = 1009
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "50000" # Default port for IBM DB2
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+resource "azurerm_network_security_rule" "neo4j" {
+  name                        = "allow-neo4j"
+  priority                    = 1010
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "7687" # Default port for Neo4j Bolt protocol
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+resource "azurerm_network_security_rule" "elasticsearch" {
+  name                        = "allow-elasticsearch"
+  priority                    = 1011
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9200" # Default port for Elasticsearch HTTP API
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+resource "azurerm_network_security_rule" "airflow" {
+  name                        = "allow-airflow"
+  priority                    = 1012
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "8080" # Default port for Apache Airflow web server
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+resource "azurerm_network_security_rule" "mlflow" {
+  name                        = "allow-mlflow"
+  priority                    = 1013
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "5000" # Default port for MLflow server
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+resource "azurerm_network_security_rule" "jupyter" {
+  name                        = "allow-jupyter"
+  priority                    = 1015
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "8888" # Default port for Jupyter Notebook server
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
 
 # resource "azurerm_dns_zone" "example" {
 #   name                = "faluz.com"
