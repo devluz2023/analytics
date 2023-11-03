@@ -106,6 +106,24 @@ resource "azurerm_network_security_rule" "mongodb" {
 
 }
 
+
+resource "azurerm_network_security_rule" "postgress" {
+  name                        = "allow-postgress"
+  priority                    = 1017
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "5432" # Default port for MongoDB
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+
+}
+
+
+
 resource "azurerm_network_security_rule" "oracle-database" {
   name                        = "allow-oracle"
   priority                    = 1005
@@ -280,6 +298,68 @@ resource "azurerm_network_security_rule" "jupyter" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "8888" # Default port for Jupyter Notebook server
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+
+# Kafka
+resource "azurerm_network_security_rule" "kafka" {
+  name                        = "allow-kafka"
+  priority                    = 1020
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9092"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+# RabbitMQ
+resource "azurerm_network_security_rule" "rabbitmq" {
+  name                        = "allow-rabbitmq"
+  priority                    = 1021
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_ranges     = ["5672", "15672"]
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+# Jenkins
+resource "azurerm_network_security_rule" "jenkins" {
+  name                        = "allow-jenkins"
+  priority                    = 1022
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "8080"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.analytics-security-grup.name
+}
+
+
+# SonarQube
+resource "azurerm_network_security_rule" "sonarqube" {
+  name                        = "allow-sonarqube"
+  priority                    = 1023
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9000"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.rg.name
