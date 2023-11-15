@@ -1,6 +1,6 @@
 # Config ssh
 1. generate key on local machine
-`ssh-keygen -t rsa -b 4096  -f ~/.ssh/azure-key -C "fabio.jdluz@gmail.com"`
+`ssh-keygen -t rsa -b 4096  -f ~/.ssh/azure-key -C "your@email"`
 
 # move the key to folder ssh 
 1. ` mv terraform-aws ~/.ssh/`
@@ -13,7 +13,7 @@
 3. verify if terraform is installed
 `terraform version`
 4. get subscription id
-`az account list`
+`az account list --output table`
 5. set subscription id
 `az account set --subscription="SUBSCRIPTION_ID"`
 6. create an service principal

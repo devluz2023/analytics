@@ -76,3 +76,4 @@ override.tf.json
 
 .env
 azure-key.cer
+scripts/test_mongo.py

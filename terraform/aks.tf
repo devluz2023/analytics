@@ -43,46 +43,47 @@
 #   }
 # }
 
-# resource "azurerm_kubernetes_cluster" "k8s" {
-#   location            = azurerm_resource_group.rg.location
-#   name                = var.cluster_name
-#   resource_group_name = azurerm_resource_group.rg.name
-#   dns_prefix          = var.dns_prefix
-#   tags                = {
-#     Environment = "Development"
-#   }
+resource "azurerm_kubernetes_cluster" "k8s" {
+  location            = azurerm_resource_group.rg.location
+  name                = var.cluster_name
+  resource_group_name = azurerm_resource_group.rg.name
+  dns_prefix          = var.dns_prefix
+  tags                = {
+    Environment = "Development"
+  }
 
-#   default_node_pool {
-#     name       = "agentpool"
-#     vm_size    = "Standard_D2_v2"
-#     node_count = var.agent_count
-#   }
-#   linux_profile {
-#     admin_username = "ubuntu"
+  default_node_pool {
+    name       = "agentpool"
+    vm_size    = "Standard_D2_v2"
+    node_count = var.agent_count
+  }
+  linux_profile {
+    admin_username = "ubuntu"
 
-#     ssh_key {
-#       key_data = file(var.ssh_public_key)
-#     }
+    ssh_key {
+      key_data = file(var.ssh_public_key)
+    }
 
-#   }
-#   # identity {
-#   #   type = "SystemAssigned"
-#   # }
-#   network_profile {
-#     network_plugin    = "kubenet"
-#     load_balancer_sku = "standard"
-#   }
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+  network_profile {
+    network_plugin    = "kubenet"
+    load_balancer_sku = "standard"
+  }
 
 #   service_principal {
 #     client_id     = var.aks_service_principal_app_id
 #     client_secret = var.aks_service_principal_client_secret
 #   }
 
-# }
+}
 
-# # resource "azurerm_role_assignment" "example" {
-# #   principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
-# #   role_definition_name             = "AcrPull"
-# #   scope                            = azurerm_container_registry.acr_app.id
-# #   skip_service_principal_aad_check = true
-# # }
+resource "azurerm_role_assignment" "example" {
+  count                          = length(azurerm_kubernetes_cluster.k8s.kubelet_identity) > 0 ? 1 : 0
+  principal_id                   = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+  role_definition_name           = "AcrPull"
+  scope                          = azurerm_container_registry.acr_app.id
+  skip_service_principal_aad_check = true
+}

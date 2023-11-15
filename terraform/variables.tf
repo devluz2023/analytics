@@ -8,6 +8,25 @@ variable "resource_group_name_prefix" {
   description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
 }
 
+variable "aks_service_principal_app_id" {
+  type = string
+}
+
+variable "aks_service_principal_client_secret" {
+  type = string
+}
+
+
+variable "dns_prefix" {
+  default = "k8stest"
+}
+
+variable "cluster_name" {
+  default = "k8stest3"
+}
+variable "ssh_public_key" {
+  default = "~/.ssh/default-fabio.jdluz.pub"
+}
 
 variable "vm_name" {
   default     = "ubuntu-vm-mssql"
