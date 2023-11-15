@@ -1,0 +1,48 @@
+---
+- name: Install Azure CLI
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install required packages for the Azure CLI
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - apt-transport-https
+          - lsb-release
+          - gnupg
+        state: present
+        update_cache: yes
+
+    - name: Create /etc/apt/keyrings directory if it does not exist
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Add Microsoft signing key
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        dest: /tmp/microsoft.asc
+      register: download_key
+
+    - name: Add the Microsoft repository signing key to keyrings
+      when: download_key is succeeded
+      shell: gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg < /tmp/microsoft.asc
+      args:
+        creates: /etc/apt/keyrings/microsoft.gpg
+
+    - name: Add Azure CLI repository
+      get_url:
+        url: https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_release }}/prod.list
+        dest: /etc/apt/sources.list.d/azure-cli.list
+
+    - name: Update APT package index
+      apt:
+        update_cache: yes
+
+    - name: Install Azure CLI
+      apt:
+        name: azure-cli
+        state: present
