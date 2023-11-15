@@ -10,10 +10,10 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '883ba73b-fa16-4be5-9e47-65185ddd6d18'
+  dockerRegistryServiceConnection: 'analytics-con'
   imageRepository: 'devluzanalytics'
-  containerRegistry: 'acrappfaluz3.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  containerRegistry: 'acrappfaluz.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/apps/app/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -38,17 +38,17 @@ stages:
         tags: |
           $(tag)
 
-- stage: Deploy
-  displayName: Deploy to Kubernetes
-  dependsOn: Build
-  jobs:
-  - job: DeployKubernetes
-    displayName: Deploy to Kubernetes
-    steps:
+# - stage: Deploy
+#   displayName: Deploy to Kubernetes
+#   dependsOn: Build
+#   jobs:
+#   - job: DeployKubernetes
+#     displayName: Deploy to Kubernetes
+#     steps:
    
-    - task: KubernetesManifest@1
-      inputs:
-        action: 'deploy'
-        kubernetesServiceConnection: 'aks-conn'  # Replace with the name of your Kubernetes service connection
-        namespace: 'app-backend'  # Replace with the desired namespace for deployment
-        manifests: 'kubernetes/backend-deployment.yaml'  # Path to your Kubernetes manifest file
+#     - task: KubernetesManifest@1
+#       inputs:
+#         action: 'deploy'
+#         kubernetesServiceConnection: 'aks-conn'  # Replace with the name of your Kubernetes service connection
+#         namespace: 'app-backend'  # Replace with the desired namespace for deployment
+#         manifests: 'kubernetes/backend-deployment.yaml'  # Path to your Kubernetes manifest file
